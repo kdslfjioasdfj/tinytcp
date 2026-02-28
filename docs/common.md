@@ -42,7 +42,8 @@ Signature: `int tinytcp_common_startup(void)`
 Parameters: ***None***
 Windows Return: This function returns the value of `WSAStartup(MAKEWORD(2, 2), &wsa)` (which can be found in `<winsock.h>` or `<winsock2.h>`; the one used by **TinyTCP** is in `<winsock2.h>`). It initializes `winsock 2.2`.
 POSIX Return: This function returns `0` on success or `-1` on failure. It sets the program to ignore `SIGPIPE` by using `signal(SIGPIPE, SIG_IGN)` (which can be found in `<signal.h>`).
-IMPORTANT: This function must be called only *once*. Before calling any function in **TinyTCP**, `tinytcp_common_startup` (which can be found in `"common.h"`; see *Functions*) must have been ran successfully.
+IMPORTANT: This function must be called only *once*. Before calling any function in **TinyTCP**, `tinytcp_common_startup` (which can be found in `"common.h"`; see *Functions*) must have been run successfully.
+IMPORTANT: On POSIX, this function sets the signal handler for `SIGPIPE` to ignore it. This affects non-**TinyTCP** sockets as well. It is process-wide behavior.
 ### tinytcp_common_cleanup:
 Cleanup **TinyTCP**.
 Signature: `int tinytcp_common_cleanup(void)`
@@ -75,6 +76,8 @@ Parameters:
 - `size_t len`: The amount of bytes to send. Must be less than `TINYTCP_COMMON_SSIZE_MAX` (which can be found in `"common.h"`; see *Types*).
 Windows Return: On success, the amount of bytes sent via TCP. On failure, a value that is less than `0`.
 POSIX Return: On success, the amount of bytes sent via TCP. On failure, a value that is less than `0`.
+IMPORTANT: The function may send fewer bytes than requested. The caller must handle partial sends.
+IMPORTANT: On POSIX, the function automatically retries on `EINTR`.
 ### tinytcp_common_recv:
 Receive bytes via TCP.
 Signature: `tinytcp_common_ssize_t tinytcp_common_recv(tinytcp_common_socket_t socket, void *restrict buf, size_t len)`
@@ -83,4 +86,6 @@ Parameters:
 - `void *restrict buf`: The buffer to write bytes to. Must be valid. Must not be `NULL`.
 - `size_t len`: The amount of bytes that can be written to the buffer.
 Windows Return: On success, the amount of bytes received via TCP. On failure, a value that is less than `0`.
-POSIX Return: On success, the amount of bytes received via TCP. On failure, a value that is less than `0`.
+POSIX Return: On success, the amount of bytes received via TCP. On failure, a value that is less than `0`. If the peer socket has performed an orderly shutdown, this function returns `0`.
+IMPORTANT: The function may receive fewer bytes than requested. The caller must handle partial reads.
+IMPORTANT: On POSIX, the function automatically retries on `EINTR`.

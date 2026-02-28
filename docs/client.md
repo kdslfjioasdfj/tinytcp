@@ -1,4 +1,4 @@
-# client.h: TCP functions for the server
+# client.h: TCP functions for the client
 
 ## Functions:
 ### tinytcp_client_connect:
