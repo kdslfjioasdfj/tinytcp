@@ -34,13 +34,13 @@ target_link_libraries(tinytcp PRIVATE ws2_32)
 endif()
 
 # Set compile options and definitions
+target_compile_definitions(tinytcp PRIVATE TINYTCP_CONFIG_BUILDING _CRT_SECURE_NO_WARNINGS)
 if(CMAKE_C_COMPILER_ID STREQUAL "GNU" OR CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "AppleClang")
 message(STATUS "Found compiler to be GNU or Clang.")
 target_compile_options(tinytcp PRIVATE -Wall -Wextra -Wpedantic -Werror)
 elseif(MSVC)
 message(STATUS "Found compiler to be MSVC")
 target_compile_options(tinytcp PRIVATE /W4 /WX)
-target_compile_definitions(tinytcp PRIVATE TINYTCP_CONFIG_BUILDING _CRT_SECURE_NO_WARNINGS)
 endif()
 
 # Set include directories
