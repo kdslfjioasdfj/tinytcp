@@ -23,8 +23,8 @@ Parameters:
 
 - `tinytcp_common_socket_t socket`: The socket to listen from. Must be successfully bound to a port. Must be valid.
 - `int backlog`: The backlog to keep when receiving clients.
-  Windows Return: The return value of `listen(socket, backlog)` (which can be found in `<winsock.h>` or `<winsock2.h>`; the one used by **TinyTCP** is in `<winsock2.h>`).
-  POSIX Return: The return value of `listen(socket, backlog)` (which can be found in `<sys/socket.h>`).
+  Windows Return: `true` on success, `false` on failure.
+  POSIX Return: `true` on success, `false` on failure.
 
 ### tinytcp_server_accept:
 
