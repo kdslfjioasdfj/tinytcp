@@ -14,3 +14,7 @@ All other **TinyTCP** functionality is reentrant. Concurrent access to the same 
 
 > **POSIX**: On errors, check `errno`.
 > **Windows**: On errors, check `WSAGetLastError()`.
+
+## Address Family Support
+
+**TinyTCP** only supports _IPv4_ and _IPv6_.
