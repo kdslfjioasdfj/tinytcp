@@ -8,4 +8,9 @@ All other **TinyTCP** functionality is reentrant. Concurrent access to the same 
 
 ## Blocking behavior
 
-**TinyTCP** is a **BLOCKING** TCP library.
+**TinyTCP** is a **blocking** TCP library.
+
+## Error handling
+
+> **POSIX**: On errors, check `errno`.
+> **Windows**: On errors, check `WSAGetLastError()`.
