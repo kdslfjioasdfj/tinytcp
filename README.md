@@ -44,18 +44,9 @@ cmake --build build
 
 ### 2. Read the documentation
 
-#### POSIX
-
-```bash
-cd docs
-cat *.md
-```
-
-#### Windows
-
-```bat
-cd docs
-type *.md
-```
+- [Disclaimers](docs/disclaimers.md)
+- [Common API](docs/common.md)
+- [Server API](docs/server.md)
+- [Client API](docs/client.md)
 
 > **NOTE:** It is highly suggested that you read the documentation.
