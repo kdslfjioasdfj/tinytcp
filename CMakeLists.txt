@@ -26,22 +26,29 @@ message(FATAL_ERROR "UNSUPPORTED PLATFORM ERROR: TinyTCP only supports Windows, 
 endif()
 
 # Add targets
-add_library(tinytcp SHARED ${SRC})
+add_library(tinytcp_dyn SHARED ${SRC})
+add_library(tinytcp_stat STATIC ${SRC})
+add_library(tinytcp ALIAS tinytcp_dyn)
 
 # Link dependencies (if needed)
 if(WIN32)
-target_link_libraries(tinytcp PRIVATE ws2_32)
+target_link_libraries(tinytcp_dyn PRIVATE ws2_32)
+target_link_libraries(tinytcp_stat PRIVATE ws2_32)
 endif()
 
 # Set compile options and definitions
-target_compile_definitions(tinytcp PRIVATE TINYTCP_CONFIG_BUILDING _CRT_SECURE_NO_WARNINGS)
+target_compile_definitions(tinytcp_dyn PRIVATE TINYTCP_CONFIG_BUILDING _CRT_SECURE_NO_WARNINGS)
+target_compile_definitions(tinytcp_stat PRIVATE TINYTCP_CONFIG_BUILDING _CRT_SECURE_NO_WARNINGS)
 if(CMAKE_C_COMPILER_ID STREQUAL "GNU" OR CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "AppleClang")
 message(STATUS "Found compiler to be GNU or Clang.")
-target_compile_options(tinytcp PRIVATE -Wall -Wextra -Wpedantic -Werror)
+target_compile_options(tinytcp_dyn PRIVATE -Wall -Wextra -Wpedantic -Werror)
+target_compile_options(tinytcp_stat PRIVATE -Wall -Wextra -Wpedantic -Werror)
 elseif(MSVC)
 message(STATUS "Found compiler to be MSVC")
-target_compile_options(tinytcp PRIVATE /W4 /WX)
+target_compile_options(tinytcp_dyn PRIVATE /W4 /WX)
+target_compile_options(tinytcp_stat PRIVATE /W4 /WX)
 endif()
 
 # Set include directories
-target_include_directories(tinytcp PUBLIC include)
+target_include_directories(tinytcp_dyn PUBLIC include)
+target_include_directories(tinytcp_stat PUBLIC include)
