@@ -52,3 +52,17 @@ endif()
 # Set include directories
 target_include_directories(tinytcp_dyn PUBLIC include)
 target_include_directories(tinytcp_stat PUBLIC include)
+
+# Set up examples
+add_executable(example_server examples/server.c)
+add_executable(example_client examples/client.c)
+target_include_directories(example_server PRIVATE include)
+target_include_directories(example_client PRIVATE include)
+target_compile_definitions(example_server PRIVATE _CRT_SECURE_NO_WARNINGS)
+target_compile_definitions(example_client PRIVATE _CRT_SECURE_NO_WARNINGS)
+target_link_libraries(example_server PRIVATE tinytcp_stat)
+target_link_libraries(example_client PRIVATE tinytcp_stat)
+if(WIN32)
+target_link_libraries(example_server PRIVATE ws2_32)
+target_link_libraries(example_client PRIVATE ws2_32)
+endif()
