@@ -27,9 +27,8 @@ I don’t take contributions for now — this library is meant to stay minimal a
 ```bash
 git clone https://github.com/kdslfjioasdfj/tinytcp
 cd tinytcp
-mkdir -p build
-cmake -B build
-cmake --build build
+premake5 ninja
+ninja
 ```
 
 #### Windows (CMD.EXE)
@@ -37,9 +36,8 @@ cmake --build build
 ```bat
 git clone https://github.com/kdslfjioasdfj/tinytcp
 cd /d tinytcp
-mkdir build 2>nul
-cmake -B build
-cmake --build build
+premake5 ninja
+ninja
 ```
 
 ### 2. Read the documentation
