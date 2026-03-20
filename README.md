@@ -46,5 +46,6 @@ ninja
 - [Common API](docs/common.md)
 - [Server API](docs/server.md)
 - [Client API](docs/client.md)
+- [Compatibility Documentation](docs/compatibility.md)
 
 > **NOTE:** It is highly suggested that you read the documentation.
