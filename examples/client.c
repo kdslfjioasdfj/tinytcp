@@ -55,7 +55,8 @@ int main(void) {
 
   // Send confirmation byte
   uint8_t confirmation_byte = 0xFF;
-  ssize_t sent = tinytcp_common_send(sock, &confirmation_byte, 1);
+  tinytcp_common_ssize_t sent =
+      tinytcp_common_send(sock, &confirmation_byte, 1);
   while (sent < 1) {
     if (sent == -1) {
       // Could NOT send confirmation byte
