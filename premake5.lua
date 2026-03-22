@@ -55,25 +55,26 @@ project("tinytcp")
 if _OPTIONS["shared"] then
 	kind("SharedLib")
 	defines({ "TINYTCP_CONFIG_SHARED" })
-	filter({"system:not windows"})
-	buildoptions({"-fPIC"})
+	filter({ "system:not windows" })
+	buildoptions({ "-fPIC" })
 	filter({}) -- Clear filters
 else
 	kind("StaticLib")
 end
-filter({"system:windows"})
+filter({ "system:windows" })
 files(concat_arrays(coreheaders, coresrcs_windows))
+links({ "ws2_32" })
 filter({}) -- Clear filters
-filter({"system:not windows"})
+filter({ "system:not windows" })
 files(concat_arrays(coreheaders, coresrcs_posix))
 filter({}) -- Clear filters
 
 project("tinytcp-server-example")
 kind("ConsoleApp")
 files(concat_arrays(serverexampleheaders, serverexamplesrcs))
-links({"tinytcp"})
+links({ "tinytcp" })
 
 project("tinytcp-client-example")
 kind("ConsoleApp")
 files(concat_arrays(clientexampleheaders, clientexamplesrcs))
-links({"tinytcp"})
+links({ "tinytcp" })
